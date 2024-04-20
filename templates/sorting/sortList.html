@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorted</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+<style>
+    li:nth-child(10n) {
+        border-bottom: 5px solid;
+  margin-bottom: 1px;
+}
+</style>
+</head>
+
+<body hx-get="/sort/sortFuture" hx-trigger="every 1s">
+    <ul class="list-group h6">
+
+    
+    {% for symbol in symbols %}
+        
+        {% if  symbol.priceChange > 0 %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{symbol.name}}
+            <span class="badge text-bg-dark">الحالى: {{symbol.currentRank}}</span>
+
+            <!-- <span class="badge text-bg-dark">السابق: {{symbol.previousRrank}}</span> -->
+
+            <span class="badge text-bg-success">$ {{symbol.price}}</span>
+            
+            <span class="badge text-bg-success">% {{symbol.priceChange|floatformat:2}}</span>
+
+            
+        </li>
+        {% else %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{symbol.name}}
+            <span class="badge text-bg-dark">الحالى: {{symbol.currentRank}}</span>
+
+            <!-- <span class="badge text-bg-dark">السابق: {{symbol.previousRrank}}</span> -->
+
+            <span class="badge text-bg-danger">$ {{symbol.price}}</span>
+            
+            <span class="badge text-bg-danger">% {{symbol.priceChange|floatformat:2}}</span>
+        </li>
+        {% endif %}
+    {% endfor %}
+
+    </ul>
+</body>
+</html>
